@@ -1,16 +1,7 @@
-# profil_insta
+# Cours Flutter - TP
 
-A new Flutter project.
+Le code final du TP "Page de profil Instagram"
 
-## Getting Started
+Essayez d'implémenter par vous même d'abord, en suivant les étapes du TP ensuite, enfin si vous êtes bloqués venez jeter un coup d'aoeil par ici ^^ !
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Notez qu'il s'agit du code final et que vous ne retrouverez pas nécessairement les étapes intermédiaires du TP.
