@@ -18,16 +18,52 @@ class ProfilPage extends StatelessWidget {
           IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          BottomNavigationBarItem(
+            label: "",
+            icon: Icon(Icons.home, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Icon(Icons.search, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Icon(Icons.add_rounded, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: Icon(Icons.smart_display_outlined, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: "",
+            icon: CircleAvatar(
+              backgroundColor: Colors.black,
+              radius: 13,
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/images/profil.PNG"),
+                radius: 11,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Container(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
             _countersSection(),
-            _usernamerSection(),
+            SizedBox(height: 10),
             _biographySection(),
+            SizedBox(height: 10),
             _actionsSection(),
+            SizedBox(height: 10),
             _storiesSection(),
-            _galerySection()
+            _gallerySection()
           ],
         ),
       ),
@@ -69,25 +105,22 @@ class ProfilPage extends StatelessWidget {
     );
   }
 
-  _usernamerSection() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        "Victor",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
   _biographySection() {
-    String bio = """
-Love travelling offroad. Just wanna share my best pictures with the world. 
-#travel
-#find the best places
-""";
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(bio),
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(color: Colors.black),
+        children: [
+          TextSpan(
+            text: "Victor\n",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(
+              text:
+                  "Love travelling offroad. Just wanna share my best pictures with the world.\n"),
+          TextSpan(text: "#travel\n"),
+          TextSpan(text: "#findthebestplaces"),
+        ],
+      ),
     );
   }
 
@@ -95,15 +128,21 @@ Love travelling offroad. Just wanna share my best pictures with the world.
     return Row(
       children: [
         Expanded(
-          child: OutlinedButton(
-            onPressed: () {},
-            child: Text("Modifier le profil"),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text("Modifier le profil"),
+            ),
           ),
         ),
         Expanded(
-          child: OutlinedButton(
-            onPressed: () {},
-            child: Text("Partager le profil"),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text("Partager le profil"),
+            ),
           ),
         ),
       ],
@@ -111,41 +150,66 @@ Love travelling offroad. Just wanna share my best pictures with the world.
   }
 
   _storiesSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Stories à la une"),
-          Icon(Icons.arrow_drop_down),
-        ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text("Stories à la une", style: TextStyle(fontWeight: FontWeight.bold)),
+        Icon(Icons.arrow_drop_down),
+      ],
+    );
+  }
+
+  _gallerySection() {
+    return DefaultTabController(
+      length: 2,
+      child: Expanded(
+        child: Column(
+          children: [
+            TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
+              tabs: [
+                Tab(icon: Icon(Icons.photo_library_outlined)),
+                Tab(icon: Icon(Icons.person_outline)),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  GridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    children: _randomImages(),
+                  ),
+                  Icon(Icons.person_outline),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  _galerySection() {
-    // Random random = Random();
-    // int randomNumber = random.nextInt(500) + 1;
+  List<Widget> _randomImages() {
+    List<Widget> gridElements = [];
 
-    return Expanded(
-      child: GridView.count(
-        crossAxisCount: 3,
-        mainAxisSpacing: 4,
-        children: [
-          // Image.network("https://picsum.photos/id/$randomNumber/200"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-          Image.asset("assets/images/profil.PNG"),
-        ],
-      ),
+    for (var i = 0; i < 12; i++) {
+      gridElements.add(_randomImage());
+    }
+
+    return gridElements;
+  }
+
+  Widget _randomImage() {
+    // renvoie un entier entre 1 et 500
+    var randomIndex = Random().nextInt(100) + 1;
+
+    return Image.network(
+      "https://picsum.photos/id/$randomIndex/250",
+      errorBuilder: (_, __, ___) {
+        return Placeholder();
+      },
     );
   }
 }
